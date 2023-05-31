@@ -14,8 +14,8 @@ public class CollisionHandling {
          */
         int[][] output;
         output = new int[2][8];
-        output[0] = new int[]{56, 0, 0, 42, 0, 28, 0, 14};
-        output[1] = new int[]{56, 70, 112, 42, 98, 28, 84, 14};
+        output[0] = new int[]{0, 56, 0, 42, 0, 28, 0, 14};
+        output[1] = new int[]{70, 56, 112, 42, 98, 28, 84, 14};
         return output;
     }
 
@@ -30,8 +30,8 @@ public class CollisionHandling {
          */
         int[][] output;
         output = new int[2][8];
-        output[0] = new int[]{0, 6, 0, 16, 1, 0, 11, 0};
-        output[1] = new int[]{24, 6, 27, 16, 1, 9, 11, 3};
+        output[0] = new int[]{0, 16, 1, 0, 11, 0, 0, 6};
+        output[1] = new int[]{27, 16, 1, 9, 11, 3, 21, 6};
         return output;
     }
 
