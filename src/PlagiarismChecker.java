@@ -5,12 +5,13 @@
 
 import java.io.*;
 import java.util.LinkedList;
+import java.util.Scanner;
 
 /**
  * PlagiarismChecker implementation.
  * 
- * @author TODO
- * @since TODO
+ * @author Aneesh Pamula
+ * @since 5/30/2023
  */
 public class PlagiarismChecker {
 
@@ -31,7 +32,7 @@ public class PlagiarismChecker {
         System.out.println(percentage + "% of lines are also in " + compareFileName);
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
 
         if (args.length < 2) {
             System.err.println("Invalid number of arguments passed");
@@ -47,19 +48,54 @@ public class PlagiarismChecker {
         
 
             for (int i = 0; i < numArgs; i++) {
-
-                /* TODO */
+                File file = new File(args[i]);
+                Scanner sc = new Scanner(file);
+                tableList[i] = new MyHashTable();
+                while(sc.hasNext())
+                    tableList[i].insert(sc.nextLine());
             }
-
             // Find similarities across files
 
             for (int i = 0; i < numArgs; i++) {
-
-                /* TODO */
-
+                File file = new File(args[i]);
+                Scanner sc = new Scanner(file);
+                Integer[] overlappedLines = new Integer[numArgs];//Number of overlapped lines for
+                // each file (same file is null)
+                double totalLines = 0;
+                while(sc.hasNext()){
+                    String lineToCheck = sc.nextLine();
+                    for(int j = 0; j < numArgs; j++){
+                        if(j==i)
+                            continue;
+                        if(overlappedLines[j] == null)//This way, the only null will be where j = i
+                            overlappedLines[j] = 0;
+                        if(tableList[j].lookup(lineToCheck))
+                            overlappedLines[j]++;
+                    }
+                    totalLines++;
+                }
+                printFileName(trim(args[i]));//print the results
+                for(int k = 0; k < overlappedLines.length; k++)
+                    if(overlappedLines[k] != null)
+                        printStatistics(trim(args[k]), (int) (overlappedLines[k]*100/totalLines));
             }
 
                 
+    }
+    /**
+    Trims the given string to just show "filename.txt"
+
+     @param str the string to trim
+     */
+    private static String trim(String str){
+        int leftIndex = 0;
+        for(int i = str.length()-2; i >= 0 ; i--){
+            if(str.charAt(i) == '/'){
+                leftIndex = i;
+                break;
+            }
+        }
+        return str.substring(leftIndex+1);
     }
 
 }
