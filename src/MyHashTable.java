@@ -39,11 +39,19 @@ public class MyHashTable implements HashTable {
     }
 
     @Override
-    public boolean insert(String value) {//incomplete
+    public boolean insert(String value) {
         if(value == null)
             throw new NullPointerException();
         int i = 0;
         int toInsert = -1;
+        if(!this.lookup(value)){
+            if(((double) this.size()) / this.capacity() > 0.7){//When load factor > 0.7
+                loadFactors.add(((double) size()) / capacity());
+                rehash();
+                rehashes++;
+                collisions.add(0);
+            }
+        }
         while(true){
             int pos = (hashString(value) + i) % this.capacity();//h(k, i)
             if(table[pos] == null){
@@ -63,12 +71,6 @@ public class MyHashTable implements HashTable {
             collisions.set(rehashes, collisions.get(rehashes) + 1);// update
             // number of collisions and continue probing
             i++;
-        }
-        if(((double) this.size()) / this.capacity() > 0.7){//When load factor > 0.7
-            loadFactors.add(((double) size()) / capacity());
-            rehash();
-            rehashes++;
-            collisions.add(0);
         }
         table[toInsert] = value;
         size++;
@@ -98,7 +100,7 @@ public class MyHashTable implements HashTable {
     public boolean lookup(String value) {
         if(value == null)
             throw new NullPointerException();
-        int i = 0;
+        int i = 0;//Iterating variable
         while(true){
             int pos = (hashString(value) + i) % this.capacity();//h(k, i)
             if(table[pos] == null || i > this.capacity())

@@ -30,8 +30,8 @@ public class CollisionHandling {
          */
         int[][] output;
         output = new int[2][8];
-        output[0] = new int[]{0, 16, 1, 0, 11, 0, 0, 6};
-        output[1] = new int[]{27, 16, 1, 9, 11, 3, 21, 6};
+        output[0] = new int[]{0, 6, 0, 16, 1, 0, 11, 3};
+        output[1] = new int[]{21, 6, 27, 16, 1, 9, 11, 3};
         return output;
     }
 
@@ -45,8 +45,8 @@ public class CollisionHandling {
         TODO: create the values for the hashtable representations
          */
         int[][] output = new int[2][8];
-        output[0] = new int[]{10, 0, 0, 17, 0, 23, 2, 0};
-        output[1] = new int[]{10, 31, 38, 17, 44, 23, 2, 51};
+        output[0] = new int[]{0, 0, 10, 17, 0, 23, 2, 0};
+        output[1] = new int[]{0, 51, 38, 17, 44, 23, 2, 0, 0, 31, 10, 0, 0, 0, 0, 0};
         return output;
     }
 

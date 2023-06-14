@@ -18,7 +18,7 @@ class MyHashTableTester {
         hash.insert("ghi");
         hash.insert("jkl");
         hash.insert("mno");
-        assertEquals("[def, ghi, mno, null, jkl, null, null, abc, dsc, null]", hash.toString());
+        assertEquals("[def, ghi, mno, null, null, null, null, abc, dsc, jkl]", hash.toString());
         //Exceptions
         assertThrows(NullPointerException.class, () -> {
             hash.insert(null);
@@ -45,7 +45,7 @@ class MyHashTableTester {
         hash.insert("jkl");
         hash.insert("mno");
         hash.delete("jkl");
-        assertEquals("[mno, ghi, null, null, null, null, null, abc, dsc, [BRIDGE]]", hash.toString());
+        assertEquals("[null, ghi, mno, null, null, null, null, abc, dsc, [BRIDGE]]", hash.toString());
         assertThrows(NullPointerException.class, () -> {
             hash.delete(null);
         });
@@ -92,7 +92,8 @@ class MyHashTableTester {
         output = "";
         for(String s : hashReturn)
             output += s + " ";
-        assertEquals(output, "def ghi mno jkl abc dsc ");
+        assertEquals(output, "def ghi mno abc dsc jkl ");
+
     }
 
     @org.junit.jupiter.api.Test
@@ -120,11 +121,11 @@ class MyHashTableTester {
     void getStatsLog() {
         for(String s : new String[]{"A", "B", "C", "D", "U", "F"})
             hash.insert(s);
-        assertEquals("Before rehash # 1: load factor 0.80, 4 collision(s).\n", hash.getStatsLog());
+        assertEquals("Before rehash # 1: load factor 0.80, 0 collision(s).\n", hash.getStatsLog());
         for(String s : new String[]{"G", "H", "I", "J", "K", "V"})
             hash.insert(s);
-        assertEquals("Before rehash # 1: load factor 0.80, 4 collision(s).\n" +
-                "Before rehash # 2: load factor 0.80, 4 collision(s).\n", hash.getStatsLog());
+        assertEquals("Before rehash # 1: load factor 0.80, 0 collision(s).\n" +
+                "Before rehash # 2: load factor 0.80, 8 collision(s).\n", hash.getStatsLog());
 
         hash = new MyHashTable(7);
         for(String s : new String[]{"Z", "Y", "X", "W", "V", "U"})
@@ -133,6 +134,6 @@ class MyHashTableTester {
         for(String s : new String[]{"L", "K", "J", "I", "H", "G"})
             hash.insert(s);
         assertEquals("Before rehash # 1: load factor 0.71, 0 collision(s).\n" +
-                "Before rehash # 2: load factor 0.71, 25 collision(s).\n", hash.getStatsLog());
+                "Before rehash # 2: load factor 0.71, 16 collision(s).\n", hash.getStatsLog());
     }
 }
